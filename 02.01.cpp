@@ -1,9 +1,8 @@
 #include <iostream>
 using namespace std;
 
-class A1
+struct A1
 {
-public:
 };
 
 class A2
@@ -36,25 +35,13 @@ public:
 
 int main()
 {
-#if 0
 	A1 a;
 	cout << sizeof(a) << endl;
-#endif
 
-#if 0
-	A2 a;
-	cout << sizeof(a) << endl;
-#endif
-
-#if 0
-	A3 a;
-	cout << sizeof(a) << endl;
-#endif
-
-#if 1
-	A4 a;
-	cout << sizeof(a) << endl;
-#endif
+	cout << sizeof(A1) << endl;
+	cout << sizeof(A2) << endl;
+	cout << sizeof(A3) << endl;
+	cout << sizeof(A4) << endl;
 
 	cout << "Over!\n";
 	return 0;

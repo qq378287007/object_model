@@ -37,35 +37,15 @@ protected:
 
 int main()
 {
-#if 0
-	A1 aobj;
-	cout << sizeof(aobj) << endl;// 4
-#endif
+	cout << sizeof(A1) << endl; // 4
+	cout << sizeof(A2) << endl; // 1
+	cout << sizeof(A3) << endl; // 1
+	cout << sizeof(A4) << endl; // 8
 
-#if 0
-	A2 aobj; 
-	cout << sizeof(aobj) << endl;// 1
-#endif
+	cout << sizeof(char *) << endl; // 8
+	cout << sizeof(int *) << endl;	// 8
 
-#if 0
-	A3 aobj; 
-	cout << sizeof(aobj) << endl;// 1
-#endif
-
-#if 0
-	A4 aobj; 
-	cout << sizeof(aobj) << endl;// 8
-#endif
-
-#if 0
-	cout << sizeof(char *) << endl;// 8
-	cout << sizeof(int *) << endl;// 8
-#endif
-
-#if 1
-	myobject obj;
-	cout << sizeof(obj) << endl; // 16
-#endif
+	cout << sizeof(myobject) << endl; // 16
 
 	cout << "Over!\n";
 	return 0;
