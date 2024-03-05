@@ -4,7 +4,7 @@ using namespace std;
 class M0TX
 {
 public:
-	M0TX() // 默认构造函数
+	M0TX()
 	{
 		cout << "Ogood!" << endl;
 	}
@@ -13,7 +13,7 @@ public:
 class MATX
 {
 public:
-	MATX() // 默认构造函数
+	MATX()
 	{
 		cout << "goodHAHAHA" << endl;
 	}
@@ -24,7 +24,7 @@ class MBTXPARENT
 public:
 	MBTXPARENT()
 	{
-		cout << "MBTXPARENT()构造函数执行了" << endl;
+		cout << "MBTXPARENT()" << endl;
 	}
 };
 
@@ -110,9 +110,9 @@ public:
 class C : public A, public A2 // 这里不需要virtual
 {
 public:
-	C() // 默认 构造函数
+	C()
 	{
-		cout << "C::C()默认构造函数执行了" << endl;
+		cout << "C::C()" << endl;
 	}
 };
 
@@ -121,7 +121,7 @@ class Time
 public:
 	Time()
 	{
-		cout << "C::C()默认构造函数执行了" << endl;
+		cout << "Time::Time()" << endl;
 	}
 	int Second{10};
 };

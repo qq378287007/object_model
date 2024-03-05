@@ -31,6 +31,7 @@ int main()
 	cout << sizeof(A) << endl;
 	cout << sizeof(B) << endl;
 	cout << sizeof(C) << endl;
+	
 	C myc;
 	myc.funA();
 	myc.funB();
