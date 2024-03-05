@@ -1,58 +1,59 @@
 #include <iostream>
 using namespace std;
 
+class A1
+{
+public:
+	int m_test;
+};
+
 class ASon
 {
 public:
 	int m_testson;
 };
+class A20
+{
+public:
+	int m_test;
+	ASon asubobj;
+};
 
-// class A
-//{
-// public:
-//	int m_test;
-// };
-
-// class CTB
-//{
-// public:
-//	CTB(const CTB&) //拷贝构造函数
-//	{
-//		cout << "CTB类的拷贝构造函数执行了" << endl;
-//	}
-//	CTB() //缺省构造函数
-//	{
-//	}
-// };
-// class CTBSon :public CTB
-//{
-// public:
-// };
 class CTB
+{
+public:
+	CTB(const CTB &)
+	{
+		cout << "CTB::CTB(const CTB &) " << endl;
+	}
+	CTB()
+	{
+	}
+};
+class A3
+{
+public:
+	CTB m_ctb;
+};
+class CTBSon : public CTB
+{
+public:
+};
+
+class CTBSon2
 {
 public:
 	virtual void mvirfunc() {}
 };
-
-//
-// class CTBSon //:public CTB
-//{
-// public:
-//	virtual void mvirfunc() {}; //定义一个虚函数
-//};
-class CTBSon : public CTB
+class CTB3
 {
 public:
-	// virtual void mvirfunc() {}
+	virtual void mvirfunc() {}
 };
-
-// class A
-//{
-// public:
-//	int m_test;
-//	ASon asubobj;
-//	CTB m_ctb;
-// };
+class CTBSon3 : public CTB3
+{
+public:
+};
 
 class Grand // 爷爷类
 {
@@ -75,35 +76,30 @@ struct TC
 {
 	int i;		   // 内置类型可以移动
 	std::string s; // string类型定义了自己的移动操作
-	//~TC() {}
 };
 
 int main()
 {
-	//{
-	//	A mya1;
-	//	mya1.m_test = 15;
-	//	A mya2 = mya1;  //这属于拷贝构造动作，但编译器没有合成拷贝构造函数
-	//	cout << "断点设置在这里" << endl;
-	//}
-	/*{
-		A mya1;
+
+	{
+		A1 mya1;
 		mya1.m_test = 15;
-		mya1.asubobj.m_testson = 120;
-		A mya2 = mya1;
-		cout << "断点设置在这里" << endl;
-	}*/
-	/*{
-		CTBSon myctbson1;
-		CTBSon myctbson2 = myctbson1;
+		A1 mya2 = mya1; // 按值拷贝，不需要合成拷贝构造函数
+	}
 
-	}*/
+	A20 mya1;
+	mya1.m_test = 15;
+	mya1.asubobj.m_testson = 120;
+	A20 mya2 = mya1; // 直接复制数据的实现手法，递归式地去复制类的成员变量
 
-	//{
-	//	C cc;
-	//	C cc2 = cc;
+	A3 a3;
 
-	//}
+	CTBSon myctbson1;
+	CTBSon myctbson2 = myctbson1;
+
+	C cc;
+	C cc2 = cc;
+
 	TC a;
 	a.i = 100;
 	a.s = "I Love China!";

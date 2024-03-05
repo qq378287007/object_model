@@ -8,107 +8,112 @@ public:
 	X(const X &tmpx)
 	{
 		m_i = tmpx.m_i;
-		cout << "X类的拷贝构造函数被调用" << endl;
+		cout << "X::X(const X &)" << endl;
 	}
 	X()
 	{
 		m_i = 0;
-		cout << "X类的构造函数被调用" << endl;
+		cout << "X::X()" << endl;
 	}
 	~X()
 	{
-		cout << "X类的析构函数被调用" << endl;
+		cout << "X::~X()" << endl;
 	}
 
 public:
 	void functest()
 	{
-		cout << "functest()成员函数被调用" << endl;
+		cout << "X::functest()" << endl;
 	}
 };
 
-// void func(X tmpx)
-// void func(X &tmpx)
-//{
-//	return;
-// }
-
-X func()
+void func1(X tmpx)
 {
-	X x0;
-	//......
-	return x0;
 }
 
-void func(X &extra) // 1：安插一个引用参数
+X func2()
 {
-	X x0; // 这个在我们看来之所以能调用构造函数，是因为编译器内部有诸如x0.X::X()这种代码
-	//..
-	extra.X::X(x0); // 2：return之前安插一个对拷贝构造函数的调用
-	// return x0;
-	return;
+	X x0;
+	return x0;
 }
 
 int main()
 {
-	//{
-	//	X x0;
-	//	x0.m_i = 15;
-	//	X x1 = x0;
-	//	X x2(x0);
-	//	X x3 = x0;
-
-	//	//步骤一：定义一个对象，为对象分配内存，但这里编译器内部并没有调用构造函数。如果以编译器的眼光看X x3_2，则不会调用构造函数。除非编译器主动增加这种x3_2.X::X();这种代码行到现有的代码中
-	//	X x3_2;
-	//	//步骤二：直接调用对象的拷贝构造函数去了
-	//	x3_2.X::X(x0);
-
-	//}
-
-	//{
-	//	X x0;
-	//	//func(x0); //程序员视角（现代编译器视角）
-
-	//	//X x0;
-	//	//X tmpx = x0;
-
-	//	//老编译器视角
-	//	X tmpobj;  //编译器产生出来一个临时对象
-	//	tmpobj.X::X(x0); //调用拷贝构造函数
-	//	func(tmpobj); //用临时对象调用func
-	//	tmpobj.X::~X(); //func()被调用完成后，析构函数被调用
-	//}
-
 	{
-		X my = func();
-		cout << "断点设置在这里" << endl;
+		X x0; // X::X()
+		x0.m_i = 15;
+
+		X x1 = x0; // X::X(const X &)
+		X x2(x0);  // X::X(const X &)
+		X x3 = x0; // X::X(const X &)
+
+		// X::~X()
+		// X::~X()
+		// X::~X()
+		// X::~X()
+
+		//	//步骤一：定义一个对象，为对象分配内存，但这里编译器内部并没有调用构造函数。
+		//  //如果以编译器的眼光看X x3_2，则不会调用构造函数。
+		//	//除非编译器主动增加这种x3_2.X::X();这种代码行到现有的代码中
+		//	X x3_2;
+		//	//步骤二：直接调用对象的拷贝构造函数去了
+		//	x3_2.X::X(x0);
 	}
+	cout << "*****************" << endl;
 	{
+		X x0;
+		func1(x0);
+		// 程序员视角（现代编译器视角）
+		// X tmpx = x0;//编译器在func1函数空间内构造了tmpx对象，函数返回前析构掉。
+
+		//	老编译器视角
+		//	X tmpobj;  //编译器产生出来一个临时对象
+		//	tmpobj.X::X(x0); //调用拷贝构造函数
+		//	func(tmpobj); //用临时对象调用func
+		//	tmpobj.X::~X(); //func()被调用完成后，析构函数被调用
+		//	void func1(X &tmpx){} //函数参数也变成了引用
+	}
+	cout << "*****************" << endl;
+	{
+		X my = func2();
+
 		// 编译器视角
-		X my; // 从编译器的视角看，这里是不调用构造函数的,除非编译器主动增加代码my.X::X();
-		func(my);
+		// X my;	//分配对象内存空间
+		// void func2(X & my) // 传递引用参数
+		//{
+		//	X x0; // 调用构造函数，编译器内部有诸如x0.X::X()这种代码
+		//	my.X::X(x0); // 调用拷贝构造函数
+		//}
 	}
-
+	cout << "*****************" << endl;
 	{
-		func().functest();
-	}
-	{
-		X my;
-		(func(my), my).functest(); // 逗号表达式，先求解表达式1，再求解表达式2，整个表达式的值是表达式2的值
-	}
+		func2().functest();
 
+		// 编译器视角
+		// X my;	//分配对象内存空间，未调用构造函数
+		// void func2(X & my) // 传递引用参数
+		//{
+		//	X x0; // 调用构造函数，编译器内部有诸如x0.X::X()这种代码
+		//	my.X::X(x0); // 调用拷贝构造函数
+		//}
+		// my.functest();
+		// my.X::~X();// 函数执行完后，调用析构函数
+	}
+	cout << "*****************" << endl;
 	{
 		X (*pf)
 		(); // 定义函数指针
-		pf = func;
+		pf = func2;
 		pf().functest();
-	}
-	{
-		X my;
-		void (*pf)(X &);
-		pf = func;
-		pf(my);
-		my.functest();
+
+		// 编译器视角
+		// void (*pf)(X &);
+		// pf = func2;
+
+		// X my;
+		// pf(my); // 传递引用，内部调用拷贝构造函数
+		// my.functest();
+		// my.X::~X();
 	}
 
 	cout << "Over!\n";

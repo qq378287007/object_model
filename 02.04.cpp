@@ -1,15 +1,6 @@
 #include <iostream>
 using namespace std;
 
-class M0TX
-{
-public:
-	M0TX()
-	{
-		cout << "Ogood!" << endl;
-	}
-};
-
 class MATX
 {
 public:
@@ -19,70 +10,88 @@ public:
 	}
 };
 
-class MBTXPARENT
+class M0TX
 {
 public:
-	MBTXPARENT()
+	M0TX()
 	{
-		cout << "MBTXPARENT()" << endl;
+		cout << "Ogood!" << endl;
 	}
 };
 
-// class MBTX
-//{
-// public:
-//	int m_i;
-//	int m_j;
-//
-//	void funct()
-//	{
-//		cout << "Iamverygood" << endl;
-//	}
-//
-// public:
-//	//MATX ma;  //类类型成员变量
-//	//M0TX m0; //注意定义顺序，先定义的ma，再定义的m0
-//
-//
-//	M0TX m0; //调换成员变量定义顺序
-//	MATX ma;  //类类型成员变量
-// };
-// class MBTX:public MBTXPARENT
-//{
-// public:
-//	int m_i;
-//	int m_j;
-//
-//	void funct()
-//	{
-//		cout << "Iamverygood" << endl;
-//	}
-// };
-
-// class MBTX
-//{
-// public:
-//	int m_i;
-//	int m_j;
-//
-//	void funct()
-//	{
-//		cout << "Iamverygood" << endl;
-//	}
-//	virtual void mvirfunc() //虚函数
-//	{
-//		cout << "mvirfunc" << endl;
-//	}
-// };
-class MBTX : public MBTXPARENT
+class MBTX
 {
 public:
 	int m_i;
 	int m_j;
 
-	MBTX() // 缺省构造函数
+	void funct()
+	{
+		cout << "Iamverygood" << endl;
+	}
+
+public:
+	MATX ma; // 类类型成员变量
+	M0TX m0; // 定义顺序，决定调用构造函数的顺序
+};
+
+class MBTXPARENT2
+{
+public:
+	MBTXPARENT2()
+	{
+		cout << "MBTXPARENT2()" << endl;
+	}
+};
+
+class MBTX2 : public MBTXPARENT2
+{
+public:
+	int m_i;
+	int m_j;
+
+	void funct()
+	{
+		cout << "Iamverygood" << endl;
+	}
+};
+
+class MBTX3
+{
+public:
+	int m_i;
+	int m_j;
+
+	void funct()
+	{
+		cout << "Iamverygood" << endl;
+	}
+	virtual void mvirfunc() // 虚函数
+	{
+		cout << "mvirfunc" << endl;
+	}
+};
+
+class MBTXPARENT4
+{
+public:
+	MBTXPARENT4()
+	{
+		cout << "MBTXPARENT4()" << endl;
+	}
+};
+class MBTX4 : public MBTXPARENT4
+{
+public:
+	int m_i;
+	int m_j;
+
+	MBTX4() // 缺省构造函数
 	{
 		m_i = 15;
+		// 编译器会在内部插入代码
+		// 调用父类的构造函数
+		// 虚函数表指针赋值
 	}
 
 	void funct()
@@ -128,13 +137,8 @@ public:
 
 int main()
 {
-	//{
-	//	MBTX myb;
-	//}
-
-	//{
-	//	C cc; //生成C类对象
-	//}
+	MBTX myb;
+	C cc; // 生成C类对象
 	Time mytime;
 
 	cout << "Over!\n";
