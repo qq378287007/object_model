@@ -1,96 +1,127 @@
 #include <iostream>
-#include <time.h>
+#include <stdio.h>
 using namespace std;
 
-class Base
+struct A1
 {
-public:
+	int &m_yy;
+	A1(int &tmpvalue) : m_yy(tmpvalue)
+	{
+		// m_yy = tmpvalue;
+		m_yy = 160;
+	}
+};
+
+struct A2
+{
+	const int &m_yy;
+	A2(const int &tmpvalue) : m_yy(tmpvalue)
+	{
+	}
+};
+
+struct Base3
+{
 	int ba;
 	int bb;
-	Base(int tmpa, int tmpb) // 构造函数
+	Base3(int tmpa, int tmpb)
+		: ba(tmpa), bb(tmpb)
 	{
 	}
 };
-
-class CSub
+struct A3 : Base3
 {
-public:
-	CSub(int tmpvalue)
-	{
-	}
-};
-
-class A : public Base
-{
-public:
 	int m_x;
 	int m_y;
 	int &m_yy;
 	const int m_myc;
-	CSub cmysub;
-	// A() :m_x(0), m_y(0)
-	//{
-	// }
-	// A(int &tmpvalue):m_yy(tmpvalue), m_myc(tmpvalue)
 
-	A(int &tmpvalue) : m_yy(tmpvalue), m_myc(tmpvalue), Base(tmpvalue, tmpvalue), cmysub(tmpvalue)
+	A3(int &tmpvalue)
+		: m_yy(tmpvalue), m_myc(tmpvalue), Base3(tmpvalue, tmpvalue)
 	{
-		// m_yy = tmpvalue; //错误，不可以，必须在初始化列表中进行绑定
 		m_x = 0;
 		m_y = 0;
-		m_yy = 160; // 就等于修改外界的abc变量值
+		m_yy = 163; // 就等于修改外界的abc变量值
 	}
 };
 
-class X
+struct CSub
 {
-public:
+	CSub(int tmpvalue) {}
+};
+struct A4
+{
+	CSub cmysub;
+	A4(int tmpvalue) : cmysub(tmpvalue)
+	{
+	}
+};
+
+struct X
+{
 	int m_i;
-	X(int value = 0) : m_i(value) // 类型转换构造函数
+	X(int value = 0) : m_i(value)
 	{
 		printf("this = %p", this);
-		cout << "X类的X(int)构造函数被调用" << endl;
+		cout << "X::X(int)" << endl;
 	}
 	X(const X &tmpv)
 	{
 		printf("this = %p", this);
-		cout << "X类的拷贝构造函数被调用" << endl;
+		cout << "X::X(const X &)" << endl;
 	}
 	X &operator=(const X &tmpTime)
 	{
 		printf("this = %p", this);
-		cout << "X类的拷贝赋值运算符被调用" << endl;
+		cout << "X::X &operator=(const X &)" << endl;
 		return *this; // 返回一个该对象的引用
 	}
 	~X()
 	{
 		printf("this = %p", this);
-		cout << "X类的析构函数被调用" << endl;
+		cout << "X::~X()" << endl;
 	}
 };
 
-class XA
+struct XA
 {
-public:
+	X xobj;
+	int m_test;
+	XA(int tmpvalue)
+	{
+		xobj = 1000;
+		m_test = 500;
+	}
+};
+
+struct XA2
+{
 	X xobj;
 	int m_test;
 	int m_test2; // 定义在后面，则后得到值
 	// XA(int tmpvalue)
 	// XA(int tmpvalue) : xobj(1000)
-	XA(int tmpvalue) : xobj(1000), m_test2(500), m_test(m_test2)
+	XA2(int tmpvalue)
+		: xobj(1000), m_test2(500), m_test(m_test2)
 	{
 		// xobj = 1000;
 		m_test = 500;
 	}
 };
-
 int main()
 {
+	int abc = 1;
+	A1 a1(abc);
+	cout << abc << endl;
 
-	/*{
-		int abc = 1;
-		A a(abc);
-	}*/
+	A2 a2(22);
+
+	int abc3 = 1;
+	A3 a3(abc3);
+	cout << abc3 << endl;
+
+	A4 a4(3);
+
 	{
 		XA myaobj(1000);
 	}
