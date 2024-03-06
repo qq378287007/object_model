@@ -98,16 +98,14 @@ struct XA2
 {
 	X xobj;
 	int m_test;
-	int m_test2; // 定义在后面，则后得到值
-	// XA(int tmpvalue)
-	// XA(int tmpvalue) : xobj(1000)
+	int m_test2;
 	XA2(int tmpvalue)
-		: xobj(1000), m_test2(500), m_test(m_test2)
+		: xobj(1000), m_test2(m_test), m_test(500)
 	{
-		// xobj = 1000;
 		m_test = 500;
 	}
 };
+
 int main()
 {
 	int abc = 1;
@@ -123,7 +121,7 @@ int main()
 	A4 a4(3);
 
 	{
-		XA myaobj(1000);
+		XA2 myaobj(1000);
 	}
 
 	cout << "Over!\n";

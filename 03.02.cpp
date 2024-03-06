@@ -1,5 +1,5 @@
+#include <stdio.h>
 #include <iostream>
-#include <time.h>
 using namespace std;
 
 class Base
@@ -29,9 +29,10 @@ public:
 
 int main()
 {
+	cout << sizeof(Base) << endl;	// 8字节，虚函数表指针，x64平台
+	cout << sizeof(Derive) << endl; // 8字节
+	/*
 	{
-		cout << sizeof(Base) << endl;	// 4字节，说明虚函数表的指针在这里的x86平台是4字节的（vptr），g++编译器是8字节
-		cout << sizeof(Derive) << endl; // 4字节，和Base类一个道理
 		Derive *d = new Derive();		// 派生类指针，其实用基类指针指向派生类也一样Base *d = new Derive();
 		long *pvptr = (long *)d;		// 指向对象d的指针转成long *型,大家注意，目前d对象里只有虚函数表指针
 		long *vptr = (long *)(*pvptr);	//(*pvptr)表示pvptr指向的对象，也就是Derive对象本身。这个对象4字节，这个4字节是虚函数表地址
@@ -75,7 +76,7 @@ int main()
 		//	ipar();                           //运行异常
 		//	jpar();                           //运行异常
 	}
-
+*/
 	cout << "Over!\n";
 	return 0;
 }
