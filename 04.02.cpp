@@ -1,5 +1,5 @@
+#include <stdio.h>
 #include <iostream>
-#include <time.h>
 using namespace std;
 
 int *ptest = new int(120);
@@ -22,38 +22,37 @@ class MYACLS
 {
 public:
 	int m_i;
-	static int m_si; // 这是声明不是定义
+	static int m_si; // 声明
 	int m_j;
 	static int m_sj;
 	int m_k;
 	static int m_sk;
 };
-int MYACLS::m_sj = 12; // 这才是定义
+int MYACLS::m_sj = 12; // 定义
 
 int main()
 {
 	{
-		int e_mytest; // 该变量在程序运行时临时放在栈中
-		e_mytest = 9;
+		int e_mytest = 9; // 程序运行时临时放在栈中
 	}
 
 	{
-		printf("ptest地址=%p\n", &ptest);
-		printf("g1地址=%p\n", &g1);
-		printf("g2地址=%p\n", &g2);
-		printf("g3地址=%p\n", &g3);
-		printf("g4地址=%p\n", &g4);
-		printf("g5地址=%p\n", &g5);
-		printf("g6地址=%p\n", &g6);
-		printf("g7地址=%p\n", &g7);
-		printf("g8地址=%p\n", &g8);
-		printf("g9地址=%p\n", &g9);
-		printf("MYACLS::m_sj地址=%p\n", &(MYACLS::m_sj));
-		printf("mygfunc()地址=%p\n", mygfunc);
-		printf("main()地址=%p\n", main);
+		printf("&ptest=%p\n", &ptest);
+		printf("&g1=%p\n", &g1);
+		printf("&g2=%p\n", &g2);
+		printf("&g3=%p\n", &g3);
+		printf("&g4=%p\n", &g4);
+		printf("&g5=%p\n", &g5);
+		printf("&g6=%p\n", &g6);
+		printf("&g7=%p\n", &g7);
+		printf("&g8=%p\n", &g8);
+		printf("&g9=%p\n", &g9);
+		printf("&MYACLS::m_sj=%p\n", &(MYACLS::m_sj));
+		printf("&mygfunc()=%p\n", mygfunc);
+		printf("&main()=%p\n", main);
 
 		int i = 7;
-		printf("i地址=%p\n", &i);
+		printf("&i=%p\n", &i);
 	}
 
 	cout << "Over!\n";

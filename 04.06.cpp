@@ -1,66 +1,52 @@
 #include <iostream>
-#include <time.h>
 #include <cstdio>
 using namespace std;
 
-class Base
+struct Base1
 {
-public:
-	// virtual  void mybvirfunc() {}
-	int m_bi;
+	int m_bi; // 4
+};
+struct MYACLS1 : Base1
+{
+	int m_i;					// 4
+	int m_j;					// 4
+	virtual void myvirfunc() {} // 8
+	// 4
+	// 8
+	// 4, 4
 };
 
-class MYACLS : public Base
+struct Base2
 {
-public:
-	int m_i;
-	int m_j;
-
-	virtual void myvirfunc()
-	{
-	}
-	MYACLS() // 构造函数
-	{
-		int abc = 1; // 方便加断点
-	}
-	~MYACLS() // 析构函数
-	{
-		int def = 0; // 方便加断点
-	}
+	virtual void mybvirfunc() {} // 8
+	int m_bi;					 // 4
+	// 8
+	// 4
+};
+struct MYACLS2 : Base2
+{
+	int m_i;					// 4
+	int m_j;					// 4
+	virtual void myvirfunc() {} // 8
+	// 8
+	// 4,4
+	// 4
 };
 
 int main()
 {
-	/*{
-		MYACLS aaa;
-	}*/
-
-	//{
-	//	cout << sizeof(MYACLS) << endl;
-	//	printf("MYACLS::m_i = %d\n", &MYACLS::m_i);
-	//	printf("MYACLS::m_j = %d\n", &MYACLS::m_j);
-
-	//}
-	//{
-	//	MYACLS myobj;
-	//	myobj.m_i = 3;
-	//	myobj.m_j = 6;
-	//	cout << "方便加断点" << endl;
-	//}
-
 	{
-		cout << sizeof(MYACLS) << endl;
-		printf("MYACLS::m_bi = %d\n", &MYACLS::m_bi);
-		printf("MYACLS::m_i = %d\n", &MYACLS::m_i);
-		printf("MYACLS::m_j = %d\n", &MYACLS::m_j);
+		cout << sizeof(MYACLS1) << endl;
+		printf("&MYACLS1::m_bi = %d\n", &MYACLS1::m_bi);
+		printf("&MYACLS1::m_i = %d\n", &MYACLS1::m_i);
+		printf("&MYACLS1::m_j = %d\n", &MYACLS1::m_j);
 	}
 
 	{
-		MYACLS myobj;
-		myobj.m_i = 3;
-		myobj.m_j = 6;
-		myobj.m_bi = 9;
-		cout << "方便加断点" << endl;
+		cout << sizeof(MYACLS2) << endl;
+		printf("MYACLS2::m_bi = %d\n", &MYACLS2::m_bi);
+		printf("MYACLS2::m_i = %d\n", &MYACLS2::m_i);
+		printf("MYACLS2::m_j = %d\n", &MYACLS2::m_j);
 	}
 
 	cout << "Over!\n";

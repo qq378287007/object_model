@@ -1,91 +1,76 @@
-#include <iostream>
-#include <time.h>
 #include <cstdio>
+#include <iostream>
 using namespace std;
 
-// class FAC  //父类
-//{
-// public:
-//	int m_fai;
-//	int m_faj;
-// };
-// class MYACLS : public FAC  //子类
-//{
-// public:
-//	int m_i;
-//	int m_j;
-// };
-
-// class Base
-//{
-// public:
-//	int m_i1;
-//	char m_c1;
-//	char m_c2;
-//	char m_c3;
-// };
-
-class Base1
+struct FAC // 父类
 {
-public:
+	int m_fai;
+	int m_faj;
+};
+struct MYACLS : FAC // 子类
+{
+	int m_i;
+	int m_j;
+};
+
+struct Base
+{
+	int m_i1;
+	char m_c1;
+	char m_c2;
+	char m_c3;
+};
+
+struct Base1
+{
 	int m_i1;
 	char m_c1;
 };
-
-class Base2 : public Base1
+struct Base2 : Base1
 {
-public:
 	char m_c2;
 };
-
-class Base3 : public Base2
+struct Base3 : Base2
 {
-public:
 	char m_c3;
 };
 
 int main()
 {
-	/*{
-		printf("MYACLS::m_i = %d\n", &FAC::m_fai);
-		printf("MYACLS::m_i = %d\n", &FAC::m_faj);
-		printf("MYACLS::m_i = %d\n", &MYACLS::m_fai);
-		printf("MYACLS::m_i = %d\n", &MYACLS::m_faj);
-		printf("MYACLS::m_i = %d\n", &MYACLS::m_i);
-		printf("MYACLS::m_j = %d\n", &MYACLS::m_j);
+	{
+		printf("&MYACLS::m_i = %d\n", &FAC::m_fai);
+		printf("&MYACLS::m_i = %d\n", &FAC::m_faj);
+		printf("&MYACLS::m_i = %d\n", &MYACLS::m_fai);
+		printf("&MYACLS::m_i = %d\n", &MYACLS::m_faj);
+		printf("&MYACLS::m_i = %d\n", &MYACLS::m_i);
+		printf("&MYACLS::m_j = %d\n", &MYACLS::m_j);
 
+		FAC facobj;
+		MYACLS myaclobj;
 	}
 
 	{
-		FAC facobj;
-		MYACLS myaclobj;
-	}*/
-
-	/*{
 		cout << sizeof(Base) << endl;
 
-		printf("Base::m_i1 = %d\n", &Base::m_i1);
-		printf("Base::m_c1 = %d\n", &Base::m_c1);
-		printf("Base::m_c2 = %d\n", &Base::m_c2);
-		printf("Base::m_c3 = %d\n", &Base::m_c3);
-
-	}*/
+		printf("&Base::m_i1 = %d\n", &Base::m_i1);
+		printf("&Base::m_c1 = %d\n", &Base::m_c1);
+		printf("&Base::m_c2 = %d\n", &Base::m_c2);
+		printf("&Base::m_c3 = %d\n", &Base::m_c3);
+	}
 
 	{
 		cout << sizeof(Base1) << endl; // 8
 		cout << sizeof(Base2) << endl; // 12
-		cout << sizeof(Base3) << endl; // 16
+		cout << sizeof(Base3) << endl; // 12
 	}
+
 	{
-		printf("Base3::m_i1 = %d\n", &Base3::m_i1);
-		printf("Base3::m_c1 = %d\n", &Base3::m_c1);
-		printf("Base3::m_c2 = %d\n", &Base3::m_c2);
-		printf("Base3::m_c3 = %d\n", &Base3::m_c3);
+		printf("&Base3::m_i1 = %d\n", &Base3::m_i1);
+		printf("&Base3::m_c1 = %d\n", &Base3::m_c1);
+		printf("&Base3::m_c2 = %d\n", &Base3::m_c2);
+		printf("&Base3::m_c3 = %d\n", &Base3::m_c3);
 	}
-
-	Base3 aaa;
-	aaa.m_c2 = 5;
-
+	
 	cout << "Over!\n";
 	return 0;
 }

@@ -1,32 +1,24 @@
 #include <iostream>
-#include <time.h>
 using namespace std;
-//
-// string myvar;  //定义全局量，字符串型
-//
-////定义一个类
-// class A
-//{
-// public:
-//	/*int myfunc()
-//	{
-//		return myvar;
-//	}*/
-//	int myfunc();
-// private:
-//	int myvar; //同全局量同名的成员变量
-// };
-//
-// int A::myfunc()
-//{
-//	return myvar;
-//	//return ::myvar;
-// }
-//
-// int  myfunc()
-//{
-//	return myvar;
-// }
+
+int myvar = 5; // 全局量
+int myfunc()
+{
+	// return ::myvar;
+	return myvar;
+}
+class A0
+{
+public:
+	int myfunc()
+	{
+		// return ::myvar;
+		return myvar;
+	}
+
+private:
+	int myvar{3};
+};
 
 typedef string mytype;
 class A
@@ -34,29 +26,29 @@ class A
 	typedef int mytype;
 
 public:
-	void myfunc(mytype tmpvalue);
-	// void myfunc(mytype tmpvalue) //这个mytype是string类型
-	//{
-	//	m_value = tmpvalue;
-	// }
+	void myfunc(mytype tmpvalue) // int
+	{
+		m_value = tmpvalue;
+	}
 
 private:
-	// typedef int mytype;
-	mytype m_value; // 这个mytype是int类型
+	mytype m_value; // int
 };
 
-void A::myfunc(mytype tmpvalue) // 这个mytype又变成了int类型，但若在类中定义myfunc，那么参数中出现的mytype是string类型
+void myfunc(mytype tmpvalue) // string类型
 {
-	m_value = tmpvalue;
-}
-
-void myfunc(mytype tmpvalue) // 这个mytype就是string类型
-{
-	string mvalue = tmpvalue;
+	mytype mvalue = tmpvalue;
 }
 
 int main()
 {
+	cout << myfunc() << endl;
+	A0 a0;
+	cout << a0.myfunc() << endl;
+
+	A a;
+	a.myfunc(4);
+	myfunc("dd");
 
 	cout << "Over!\n";
 	return 0;

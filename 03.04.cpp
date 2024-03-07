@@ -1,5 +1,5 @@
+#include <stdio.h>
 #include <iostream>
-#include <time.h>
 using namespace std;
 
 // 父类1
@@ -62,57 +62,51 @@ public:
 
 int main()
 {
-	cout << sizeof(Base1) << endl;	 // 4
-	cout << sizeof(Base2) << endl;	 // 4
-	cout << sizeof(Derived) << endl; // 8字节，这说明Derived里有两个虚函数表指针（2个vptr）
+	cout << sizeof(Base1) << endl;	 // 8
+	cout << sizeof(Base2) << endl;	 // 8
+	cout << sizeof(Derived) << endl; // 16字节，两个虚函数表指针（2个vptr）
 
 	Derived ins; // 定义一个子类对象
+
 	Base1 &b1 = ins;
 	Base2 &b2 = ins;
 	Derived &d = ins;
-
-	typedef void (*Func)(void);
-
-	long *pderived1 = (long *)(&ins);
-	long *vptr1 = (long *)(*pderived1); // 第一个虚函数表指针，根据public中的继承顺序，应该是和base1对应
-
-	long *pderived2 = pderived1 + 1;	// 往后走4个字节
-	long *vptr2 = (long *)(*pderived2); // 第二个虚函数表指针
-
-	// 这些条目有规律，先从第一个继承的父类里找函数，如果自己覆盖的，就弄成自己的，如果自己没覆盖的，就弄成父亲的
-	// 然后接着是自己的虚函数首地址
-	Func f1 = (Func)vptr1[0]; // 0x00f31550 {project100.exe!Derived::f(void)}
-	Func f2 = (Func)vptr1[1]; // 0x00f31596 {project100.exe!Base1::g(void)}
-	Func f3 = (Func)vptr1[2]; // 0x00f31578 {project100.exe!Derived::mh(void)}
-	Func f4 = (Func)vptr1[3]; // 0x00f31582 {project100.exe!Derived::mi(void)}
-	Func f5 = (Func)vptr1[4]; // 0x00f3157d {project100.exe!Derived::mj(void)}
-	Func f6 = (Func)vptr1[5]; // 0x0029aa64 {project100.exe!const Derived::`RTTI Complete Object Locator'{for `Base2'}}
-	Func f7 = (Func)vptr1[6]; // 后面先不管
-	Func f8 = (Func)vptr1[7]; // 后面先不管
-
-	// 这里找继承的另外一个父类，如果自己覆盖的，就弄成自己的，如果自己没覆盖的，就弄成父亲的
-	Func f11 = (Func)vptr2[0]; // 0x00291587 {project100.exe!Base2::h(void)}
-	Func f22 = (Func)vptr2[1]; // 0x00291591 {project100.exe!Derived::i(void)}
-	Func f33 = (Func)vptr2[2]; // 非法
-	Func f44 = (Func)vptr2[3]; // 非法
-
 	b1.f(); // derived::f()，父类引用，但引用的是子类，所以这里执行子类所覆盖的父类的虚函数
 	b2.i(); // dervied::i()，父类引用，但引用的是子类，所以这里执行子类所覆盖的父类的虚函数
 	d.f();	// derived::f()
 	d.i();	// derived::i()
 	d.mh(); // derived::mh()
 
-	cout << "-------------------" << endl;
-	f1(); // derived::f()
-	f2(); // base1::g()
-	f3(); // derived::mh()
-	f4(); // derived::mi()
-	f5(); // derived::mj()
-	// f6();    //异常，报错
-	cout << "-------------------" << endl;
-	f11(); // base2::h()
-	f22(); // derived::i()
-	cout << "-------------------" << endl;
+	cout << "********************\n";
+
+	long ***pderived1 = (long ***)(&ins);
+	long **vptr1 = pderived1[0]; // 第一个虚函数表指针，根据继承顺序，和base1对应
+	long **vptr2 = pderived1[1]; // 往后走8个字节, 第二个虚函数表指针
+
+	typedef void (*Func)(void);
+	// 第一个父类虚函数（子类重写则覆盖）+子类虚函数
+	Func f1 = (Func)vptr1[0]; // 0x00f31550 {project100.exe!Derived::f(void)}
+	f1();
+	Func f2 = (Func)vptr1[1]; // 0x00f31596 {project100.exe!Base1::g(void)}
+	f2();
+	Func f3 = (Func)vptr1[2]; // 0x00f31578 {project100.exe!Derived::mh(void)}
+	f3();
+	Func f4 = (Func)vptr1[3]; // 0x00f31582 {project100.exe!Derived::mi(void)}
+	f4();
+	Func f5 = (Func)vptr1[4]; // 0x00f3157d {project100.exe!Derived::mj(void)}
+	f5();
+	Func f6 = (Func)vptr1[5]; // 0x0029aa64 {project100.exe!const Derived::`RTTI Complete Object Locator'{for `Base2'}}
+	f6();
+	Func f7 = (Func)vptr1[6];
+	// f7(); //error
+
+	// 第二个父类虚函数（子类重写则覆盖）
+	Func f11 = (Func)vptr2[0]; // 0x00291587 {project100.exe!Base2::h(void)}
+	f11();
+	Func f22 = (Func)vptr2[1]; // 0x00291591 {project100.exe!Derived::i(void)}
+	f22();
+	Func f33 = (Func)vptr2[2]; // 非法
+	// f33();					   // error
 
 	cout << "Over!\n";
 	return 0;

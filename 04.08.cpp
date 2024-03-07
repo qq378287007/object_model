@@ -1,82 +1,79 @@
-#include <iostream>
-#include <time.h>
 #include <cstdio>
+#include <iostream>
 using namespace std;
 
-// class Grand //爷爷类
-//{
-// public:
-//	int m_grand;
-// };
-// class A1 : public  Grand
-//{
-// public:
-// };
-// class A2 : public  Grand
-//{
-// public:
-// };
-// class C1 :public A1, public A2
-//{
-// public:
-// };
-
-class Grand // 爷爷类
+struct Grand // 爷爷类
 {
-public:
 	int m_grand;
 };
-class A1 : virtual public Grand // 注意这里用了virtual
+
+struct A0_1 : Grand
 {
-public:
+};
+struct A0_2 : Grand
+{
+};
+struct C0 : A0_1, A0_2
+{
+};
+
+struct A1 : virtual Grand // 注意这里用了virtual
+{
 	int m_a1;
+	// 8
+	// 4(m_a1)
 };
-class A2 : virtual public Grand // 注意这里用了virtual
+struct A2 : virtual Grand // 注意这里用了virtual
 {
-public:
 	int m_a2;
+	// 8
+	// 4(m_a2)
 };
-class C1 : public A1, public A2 // 这里不需要virtual
+struct C1 : A1, A2 // 这里不需要virtual
 {
-public:
 	int m_c1;
+	// 8
+	// 4(m_a1)
+	// 8
+	// 4, 4(m_a2, m_c1)
 };
 
 int main()
 {
-
-	//{
-	//	cout << sizeof(Grand) << endl;
-	//	cout << sizeof(A1) << endl;
-	//	cout << sizeof(A2) << endl;
-	//	cout << sizeof(C1) << endl;
-	//}
-
-	//{
-	//	C1 c1;
-	//	//c1.m_grand = 12; //这句编译时会报错
-	//	c1.A1::m_grand = 5;
-	//	c1.A2::m_grand = 8;
-
-	//}
-
-	//{
-	//	C1 c1;
-	//	c1.m_grand = 12; //这句编译时不会再报错
-	//}
-
 	{
 		cout << sizeof(Grand) << endl;
-		cout << sizeof(A1) << endl;
-		cout << sizeof(A2) << endl;
-		cout << sizeof(C1) << endl;
+		cout << sizeof(A0_1) << endl;
+		cout << sizeof(A0_2) << endl;
+		cout << sizeof(C0) << endl;
+	}
+
+	{
+
+		C0 c0;
+		c0.A0_1::m_grand = 5;
+		c0.A0_2::m_grand = 8;
+		// c0.m_grand = 12; //error
 	}
 
 	{
 		A1 a1;
 		A2 a2;
-		cout << "设置断点" << endl;
+
+		C1 c1;
+		c1.m_grand = 12; // ok
 	}
+	cout << "************\n";
+	{
+		cout << sizeof(Grand) << endl; // 4
+		cout << sizeof(A1) << endl;	   // 16
+		cout << sizeof(A2) << endl;	   // 16
+		cout << sizeof(C1) << endl;	   // 40
+	}
+	cout << "************\n";
+
+	printf("&C1::m_a1 = %d\n", &C1::m_a1);
+	printf("&C1::m_a2 = %d\n", &C1::m_a2);
+	printf("&C1::m_c1 = %d\n", &C1::m_c1);
 
 	cout << "Over!\n";
 	return 0;
