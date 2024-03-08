@@ -1,88 +1,73 @@
-#include <iostream>
-#include <time.h>
 #include <cstdio>
+#include <iostream>
 using namespace std;
 
-class A
+struct A
 {
-public:
-	A()
-	{
-		printf("A::A()执行了，this = %p\n", this);
-	};
+	A() { printf("A::A(), this = %p\n", this); }
 	virtual ~A() {}
 
-public:
+	virtual void myvirfunc2()
+	{
+		printf("A::myvirfunc2()\n");
+	}
 	virtual void myvirfunc()
 	{
 		myvirfunc2();
-		printf("A::myvirfunc()执行了!\n");
-	};
-	virtual void myvirfunc2()
-	{
-		printf("A::myvirfunc2()执行了!\n");
-	};
+		printf("A::myvirfunc()\n");
+	}
 };
-class B : public A
+struct B : A
 {
-public:
 	B()
 	{
 		myvirfunc();
-		printf("B::B()执行了，this = %p\n", this);
-	};
+		printf("B::B(), this = %p\n", this);
+	}
 	virtual ~B() {}
 
-public:
+	virtual void myvirfunc2()
+	{
+		printf("B::myvirfunc2()\n");
+	}
 	virtual void myvirfunc()
 	{
 		myvirfunc2();
-		printf("B::myvirfunc()执行了!\n");
-	};
-	virtual void myvirfunc2()
-	{
-		printf("B::myvirfunc2()执行了!\n");
-	};
+		printf("B::myvirfunc()\n");
+	}
 };
-class C : public B
+struct C : B
 {
-public:
-	C() : m_c(11)
+	int m_c;
+	C()
+		: m_c(11)
 	{
 		myvirfunc(); // 调用一个虚函数
-		printf("C::C()执行了，this = %p\n", this);
-	};
+		printf("C::C(), this = %p\n", this);
+	}
 	virtual ~C()
 	{
 		myvirfunc();
 	}
 
-public:
-	int m_c;
-
-public:
+	virtual void myvirfunc2()
+	{
+		printf("C::myvirfunc2()\n");
+	}
 	virtual void myvirfunc()
 	{
 		myvirfunc2();
-		printf("C::myvirfunc()执行了!\n");
-	};
-	virtual void myvirfunc2()
-	{
-		printf("C::myvirfunc2()执行了!\n");
-	};
+		printf("C::myvirfunc()\n");
+	}
 };
 
 int main()
 {
-	/*{
-		C c;
-	}*/
+	// C c;
 
-	{
-		C *mycobj = new C();
-		mycobj->myvirfunc();
-		delete mycobj;
-	}
+	C *mycobj = new C();
+	// mycobj->myvirfunc();
+	delete mycobj;
 
 	cout << "Over!\n";
 	return 0;

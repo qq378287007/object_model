@@ -79,9 +79,9 @@ int main()
 
 	cout << "********************\n";
 
-	long ***pderived1 = (long ***)(&ins);
-	long **vptr1 = pderived1[0]; // 第一个虚函数表指针，根据继承顺序，和base1对应
-	long **vptr2 = pderived1[1]; // 往后走8个字节, 第二个虚函数表指针
+	long long ***pderived1 = (long long ***)(&ins);
+	long long **vptr1 = pderived1[0]; // 第一个虚函数表指针，根据继承顺序，和base1对应
+	long long **vptr2 = pderived1[1]; // 往后走8个字节, 第二个虚函数表指针
 
 	typedef void (*Func)(void);
 	// 第一个父类虚函数（子类重写则覆盖）+子类虚函数

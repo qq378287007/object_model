@@ -31,8 +31,8 @@ int main()
 {
 	typedef void (*Func)(void);
 	Derive derive;
-	long ***pvptrderive = (long ***)(&derive);
-	long **vptrderive = *pvptrderive;
+	long long ***pvptrderive = (long long ***)(&derive);
+	long long **vptrderive = *pvptrderive;
 	Func f1 = (Func)vptrderive[0];
 	f1();
 	Func f2 = (Func)vptrderive[1];
@@ -41,14 +41,14 @@ int main()
 	f3();
 
 	Derive derive2 = derive; // 拷贝构造
-	long ***pvptrderive2 = (long ***)(&derive2);
-	long **vptrderive2 = *pvptrderive2;
+	long long ***pvptrderive2 = (long long ***)(&derive2);
+	long long **vptrderive2 = *pvptrderive2;
 	printf("&vptrderive = %p\n", vptrderive);
 	printf("&vptrderive2 = %p\n", vptrderive2);
 
 	Base base = derive; // 直接用子类对象给父类对象值
-	long ***pvptrbase = (long ***)(&base);
-	long **vptrbase = *pvptrbase;
+	long long ***pvptrbase = (long long ***)(&base);
+	long long **vptrbase = *pvptrbase;
 	Func fb1 = (Func)vptrbase[0];
 	fb1();
 	Func fb2 = (Func)vptrbase[1];

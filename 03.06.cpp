@@ -2,6 +2,25 @@
 #include <iostream>
 using namespace std;
 
+class X0
+{
+public:
+	int x;
+	int y;
+	int z;
+	X0()
+	{
+		memset(this, 0, sizeof(X0));
+		cout << "X0:X0()" << endl;
+	}
+
+	X0(const X0 &tm)
+	{
+		memcpy(this, &tm, sizeof(X0));
+		cout << "X0:X0(const X0&)" << endl;
+	}
+};
+
 class X
 {
 public:
@@ -46,13 +65,23 @@ public:
 int main()
 {
 	{
+		X0 x0;
+		x0.x = 100;
+		x0.y = 200;
+		x0.z = 300;
+		X0 x1(x0);
+		cout << "x1.x=" << x1.x << ", x1.y=" << x1.y << ", x1.z=" << x1.z << endl;
+	}
+
+	{
 		X x0;
 		x0.x = 100;
 		x0.y = 200;
 		x0.z = 300;
-		x0.virfunc();
 		X x1(x0);
 		cout << "x1.x=" << x1.x << ", x1.y=" << x1.y << ", x1.z=" << x1.z << endl;
+
+		x0.virfunc();
 	}
 
 	{
@@ -67,11 +96,12 @@ int main()
 		int i = 9;
 		printf("&i = %p\n", &i); // 会发现每次i的地址输出出来都不一样
 
-		printf("&ptfunc = %p\n", &X::ptfunc); // 正常函数地址可以这样输出
+		printf("&X::ptfunc = %p\n", &X::ptfunc); // 正常函数地址可以这样输出
+		printf("&X::virfunc = %p\n", &X::virfunc); // 正常函数地址可以这样输出
 
 		X x0;
-		long ***pvptr = (long ***)(&x0);
-		long **vptr = *pvptr;
+		long long ***pvptr = (long long ***)(&x0);
+		long long **vptr = *pvptr;
 		printf("vptr[1] = %p\n", vptr);
 
 		x0.ptfunc();

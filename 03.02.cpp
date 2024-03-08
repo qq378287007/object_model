@@ -35,8 +35,8 @@ int main()
 	Derive *d = new Derive(); // 类指针
 	// Base *d = new Derive();//等价
 
-	long ***pvptr = (long ***)d; // 类指针转为虚函数表指针（三级指针）
-	long **vptr = *pvptr;		 // 虚函数表指针取值得到虚函数表（二级指针）
+	long long ***pvptr = (long long ***)d; // 类指针转为虚函数表指针（三级指针）
+	long long **vptr = *pvptr;		 // 虚函数表指针取值得到虚函数表（二级指针）
 
 	for (int i = 0; vptr[i] != nullptr; i++)
 		printf("vptr[%d] = 0x:%p\n", i, vptr[i]); // 虚函数地址（一级指针）
@@ -54,8 +54,8 @@ int main()
 
 	//---------------------------
 	Base *dpar = new Base();
-	long ***pvptrpar = (long ***)dpar;
-	long **vptrpar = *pvptrpar;
+	long long ***pvptrpar = (long long ***)dpar;
+	long long **vptrpar = *pvptrpar;
 	for (int i = 0; vptrpar[i] != nullptr; i++)
 		printf("vptr_Base [%d] = 0x:%p\n", i, vptrpar[i]);
 

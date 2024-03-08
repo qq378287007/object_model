@@ -1,59 +1,46 @@
-#include <iostream>
-#include <time.h>
 #include <cstdio>
+#include <iostream>
 using namespace std;
 
-class A
+struct A
 {
-public:
-	// A()
-	//{
-	//	cout << "A::A()缺省构造函数执行了" << endl;
-	// }
-	//~A()
-	//{
-	//	cout << "A::~A()析构函数执行了" << endl;
-	// }
 	int m_i;
+	// A() { cout << "A::A()" << endl; }
+	//~A() { cout << "A::~A()" << endl; }
 };
 
-// void myfunc()
-//{
-//	static A s_aobj1;
-//	static A s_aobj2;
-//	printf("s_aobj1的地址是%p\n", &s_aobj1);
-//	printf("s_aobj2的地址是%p\n", &s_aobj2);
-// }
-// const A& myfunc()
-//{
-//	static A s_aobj1;
-//	printf("s_aobj1的地址是%p\n", &s_aobj1);
-//	return s_aobj1;
-// }
+void myfunc1()
+{
+	static A s_aobj1;
+	static A s_aobj2;
+	printf("&s_aobj1=%p\n", &s_aobj1);
+	printf("&s_aobj2=%p\n", &s_aobj2);
+}
+const A &myfunc2()
+{
+	static A s_aobj1;
+	printf("&s_aobj1=%p\n", &s_aobj1);
+	return s_aobj1;
+}
 
 void myfunc()
 {
-	// static A s_aobj[5];
-	static A s_aobj[1000'0000]; // 中间有'的数字是C++14新标准中支持的, '是数字分隔符
+	static A s_aobj[1000'0000]; // '是数字分隔符, C++14
 	for (int i = 0; i < 1000'0000; i++)
-	{
-		s_aobj[i].m_i = i; // 这对于数组来说，一定算一件有用的事
-	}
-	printf("s_aobj数组的首地址是%p\n", s_aobj);
+		s_aobj[i].m_i = i;
+	printf("s_aobj = %p\n", s_aobj);
 }
 
 int main()
 {
-	//{
-	//	myfunc();//调用一次
-	//	myfunc(); //又调用一次
-	//}
+	myfunc1();
+	myfunc1();
+
+	printf("&A=%p\n", &myfunc2());
+	printf("&A=%p\n", &myfunc2());
 
 	myfunc();
-	printf("开始进入while循环\n");
-	while (1)
-	{
-	}
+	myfunc();
 
 	cout << "Over!\n";
 	return 0;

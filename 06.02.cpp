@@ -1,27 +1,14 @@
 #include <iostream>
-#include <time.h>
-#include <cstdio>
 using namespace std;
 
-class JI
+struct JI
 {
-public:
-	JI()
-	{
-		cout << "JI::JI()缺省构造函数执行了" << endl;
-	}
-
-public:
-	virtual ~JI()
-	{
-		cout << "JI::~JI()析构函数执行了" << endl;
-	}
+	JI() { cout << "JI::JI()" << endl; }
+	virtual ~JI() { cout << "JI::~JI()" << endl; }
 };
 
-// class A
-class A : public JI
+struct A : JI
 {
-public:
 	int m_i, m_j;
 
 	// private:
@@ -31,78 +18,61 @@ public:
 	// public:
 	//	A& operator=(const A& tmp) = delete;
 	//	A(const A& tmptime) = delete;
-public:
+
+	A() { cout << "A::A()" << endl; }
+	~A() { cout << "A::~A()" << endl; }
+
 	A &operator=(const A &tmp)
 	{
+		if (&tmp == this)
+			return *this;
+
+		// static_cast<JI&>(*this) = tmp; // 调用父类的拷贝赋值运算符
+		// JI::operator=(tmp);// 调用父类的拷贝赋值运算符
+
 		m_i = tmp.m_i;
 		m_j = tmp.m_j;
-		cout << "A::operator=(const A&)拷贝赋值运算符执行了" << endl;
+		cout << "A::operator=(const A&)" << endl;
 		return *this;
 	}
-	A(const A &tmptime)
+	A(const A &tmp)
+	//: JI(tmp) // 显式调用父类拷贝构造函数
 	{
-		m_i = tmptime.m_i;
-		m_j = tmptime.m_j;
-		cout << "A::A(const A&)拷贝构造函数执行了" << endl;
-	}
-	A()
-	{
-		cout << "A::A()缺省构造函数执行了" << endl;
-	}
-
-public:
-	~A()
-	{
-		cout << "A::A()析构函数执行了" << endl;
+		// 编译器会插入代码，调用父类的构造函数或者拷贝构造函数？
+		m_i = tmp.m_i;
+		m_j = tmp.m_j;
+		cout << "A::A(const A&)" << endl;
 	}
 };
 
-class ParC
+struct ParC
 {
-public:
-	virtual ~ParC()
-	{
-		cout << "ParC::~ParC()虚析构函数执行了" << endl;
-	}
+	virtual ~ParC() { cout << "ParC::~ParC()" << endl; }
 };
-class MemC
+struct MemC
 {
-public:
 	ParC m_j;
 
-public:
-	~MemC()
-	{
-		cout << "MemC::~MemC()析构函数执行了" << endl;
-	}
+	~MemC() { cout << "MemC::~MemC()" << endl; }
 };
 
 int main()
 {
-	//{
-	//	A aobj;
-	//	aobj.m_i = 15;
-	//	aobj.m_j = 20;
-
-	//	A aobj2 = aobj; //执行拷贝构造
-
-	//	A aobj3;
-	//	aobj3.m_i = 13;
-	//	aobj3.m_j = 16;
-	//	aobj2 = aobj3;	//执行拷贝复制运算符
-
-	//	cout << "设置断点" << endl;
-	//}
-	/*{
-		A aobj;
-	}*/
-
-	/*{
-		MemC mobj;
-	}*/
-
 	{
 		A aobj;
+		aobj.m_i = 15;
+		aobj.m_j = 20;
+
+		A aobj2 = aobj; // 执行拷贝构造
+
+		A aobj3;
+		aobj3.m_i = 13;
+		aobj3.m_j = 16;
+		aobj2 = aobj3; // 执行拷贝复制运算符
+	}
+
+	{
+		MemC mobj;
 	}
 
 	cout << "Over!\n";
