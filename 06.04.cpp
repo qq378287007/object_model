@@ -27,7 +27,7 @@ void myfunc()
 {
 	static A s_aobj[1000'0000]; // '是数字分隔符, C++14
 	for (int i = 0; i < 1000'0000; i++)
-		s_aobj[i].m_i = i;
+		s_aobj[i].m_i = i;//大数组做有用事情时，才实际分配内存
 	printf("s_aobj = %p\n", s_aobj);
 }
 
