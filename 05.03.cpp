@@ -21,11 +21,12 @@ int main()
 	{
 		printf("MYACLS::myvirfunc()地址 = %p\n", &MYACLS::myvirfunc1);
 		printf("MYACLS::myvirfunc()地址 = %p\n", &MYACLS::myvirfunc2);
-		cout << sizeof(MYACLS) << endl; // 4字节
+		cout << sizeof(MYACLS) << endl; // 8字节
+		
 		MYACLS *pmyobj = new MYACLS();
 		pmyobj->myvirfunc1();
 		pmyobj->myvirfunc2();
-		cout << "断点设置在这" << endl;
+		delete pmyobj;
 	}
 
 	cout << "Over!\n";

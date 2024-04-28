@@ -5,23 +5,32 @@ using namespace std;
 class Grand // 爷爷类
 {
 public:
-	int m_grand;
+	int m_grand; // 4
 };
 
 class A1 : virtual public Grand // 注意这里用了virtual
 {
 public:
 	int m_a1;
+	// 8(vbptr)
+	// 4(m_a1)+4(m_grand)
 };
 class A2 : virtual public Grand // 注意这里用了virtual
 {
 public:
 	int m_a2;
+	// 8(vbptr)
+	// 4(m_a2)+4(m_grand)
 };
 class C1 : public A1, public A2 // 这里不需要virtual
 {
 public:
 	int m_c1;
+	// 8(vbptr A1)
+	// 4(m_a1)+4
+	// 8(vbptr A2)
+	// 4(m_a2)+4(m_c1)
+	// 4(m_grand)+4
 };
 
 int main()
@@ -32,6 +41,13 @@ int main()
 		cout << sizeof(A2) << endl;
 		cout << sizeof(C1) << endl;
 
+		printf("&C1::m_a1=%d\n", &C1::m_a1);
+		printf("&C1::m_a2=%d\n", &C1::m_a2);
+		printf("&C1::m_c1=%d\n", &C1::m_c1);
+		printf("&C1::m_grand=%d\n", &C1::m_grand);
+	}
+
+	{
 		C1 c1obj;
 		c1obj.m_grand = 2;
 		c1obj.m_a1 = 5;

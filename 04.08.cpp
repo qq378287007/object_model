@@ -52,7 +52,7 @@ int main()
 		C0 c0;
 		c0.A0_1::m_grand = 5;
 		c0.A0_2::m_grand = 8;
-		// c0.m_grand = 12; //error
+		// c0.m_grand = 12; //error，访问不明确
 	}
 
 	{
@@ -74,6 +74,7 @@ int main()
 	printf("&C1::m_a1 = %d\n", &C1::m_a1);
 	printf("&C1::m_a2 = %d\n", &C1::m_a2);
 	printf("&C1::m_c1 = %d\n", &C1::m_c1);
+	printf("&C1::m_grand = %d\n", &C1::m_grand);
 
 	cout << "Over!\n";
 	return 0;

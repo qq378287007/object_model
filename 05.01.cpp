@@ -3,9 +3,8 @@
 #include <cstdio>
 using namespace std;
 
-class MYACLS
+struct MYACLS
 {
-public:
 	int m_i;
 	void myfunc(int abc)
 	{

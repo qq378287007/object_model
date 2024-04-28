@@ -3,7 +3,7 @@
 #include <cstdio>
 using namespace std;
 
-class MYACLS
+struct MYACLS
 {
 public:
 	int m_i;
@@ -36,24 +36,26 @@ void gmyfunc(MYACLS *ptmp, int abc)
 
 int main()
 {
-	/*{
-		MYACLS  myacls;
+	{
+		MYACLS myacls;
 		myacls.myvirfunc();
-		MYACLS* pmyacls = new MYACLS;
+
+		MYACLS *pmyacls = new MYACLS;
 		pmyacls->myvirfunc();
 		delete pmyacls;
-	}*/
+	}
 
 	{
 		MYACLS myacls;
 		myacls.mystfunc();
+
 		MYACLS *pmyacls = new MYACLS;
 		pmyacls->mystfunc();
-		((MYACLS *)0)->mystfunc(); // 这样调用静态成员函数没问题
+
+		((MYACLS *)nullptr)->mystfunc(); // 这样调用静态成员函数没问题
 		((MYACLS *)0)->myfunc(12);
-		pmyacls->mystfunc();
+
 		printf("MYACLS::mystfunc()地址 = %p\n", MYACLS::mystfunc);
-		cout << "断点设置在这里" << endl;
 	}
 
 	cout << "Over!\n";

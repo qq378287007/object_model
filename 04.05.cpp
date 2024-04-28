@@ -38,10 +38,10 @@ struct Base3 : Base2
 int main()
 {
 	{
-		printf("&MYACLS::m_i = %d\n", &FAC::m_fai);
-		printf("&MYACLS::m_i = %d\n", &FAC::m_faj);
-		printf("&MYACLS::m_i = %d\n", &MYACLS::m_fai);
-		printf("&MYACLS::m_i = %d\n", &MYACLS::m_faj);
+		printf("&FAC::m_fai = %d\n", &FAC::m_fai);
+		printf("&FAC::m_faj = %d\n", &FAC::m_faj);
+		printf("&MYACLS::m_fai = %d\n", &MYACLS::m_fai);
+		printf("&MYACLS::m_faj = %d\n", &MYACLS::m_faj);
 		printf("&MYACLS::m_i = %d\n", &MYACLS::m_i);
 		printf("&MYACLS::m_j = %d\n", &MYACLS::m_j);
 

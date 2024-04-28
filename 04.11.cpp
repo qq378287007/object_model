@@ -3,9 +3,8 @@
 #include <cstdio>
 using namespace std;
 
-class MYACLS
+struct MYACLS
 {
-public:
 	int m_i;
 	int m_j;
 	int m_k;
@@ -40,6 +39,9 @@ int main()
 	int MYACLS::*mypoint = &MYACLS::m_j;
 	printf("MYACLS::m_j offset value = %d\n", mypoint);
 
+	mypoint = &MYACLS::m_i;
+	printf("MYACLS::m_i offset value = %d\n", mypoint);
+
 	myobj.*mypoint = 22;   // 注意写法
 	pmyobj->*mypoint = 19; // 注意写法
 
@@ -64,7 +66,6 @@ int main()
 		{
 			cout << "条件成立" << endl;
 		}
-
 	}
 	*/
 
