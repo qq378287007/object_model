@@ -3,46 +3,27 @@
 #include <cstdio>
 using namespace std;
 
-class Base
+struct Base
 {
-public:
+	virtual ~Base() { cout << "Base::~Base()" << endl; }
 	virtual void f() { cout << "Base::f()" << endl; }
 	virtual void g() { cout << "Base::g()" << endl; }
 	virtual void h() { cout << "Base::h()" << endl; }
-
-	virtual ~Base()
-	{
-		cout << "Base::~Base()" << endl;
-	}
 };
 
-class Base2
+struct Base2
 {
-public:
+	virtual ~Base2() { cout << "Base2::~Base2()" << endl; }
 	virtual void hBase2() { cout << "Base2::hBase2()" << endl; }
-
-	/*~Base2()
-	{
-		cout << "Base2::Base2()" << endl;
-	}*/
-
-	virtual ~Base2()
-	{
-		cout << "Base2::~Base2()" << endl;
-	}
 };
 
-class Derive : public Base, public Base2
+struct Derive : Base, Base2
 {
-public:
+	virtual ~Derive() { cout << "Derive::~Derive()" << endl; }
+
 	virtual void i() { cout << "Derive::i()" << endl; }
 	virtual void g() { cout << "Derive::g()" << endl; }
 	void myselffunc() {} // 只属于Derive的函数
-
-	virtual ~Derive()
-	{
-		cout << "Derive::~Derive()" << endl;
-	}
 };
 
 class ParentClass // 一个父类
@@ -95,8 +76,6 @@ int main()
 
 	//	Derive dddd;
 	//	dddd.i();   //Derive::i()，不走虚函数表，直接调用虚函数
-
-	//	cout << "断点设置在这里" << endl;
 	//}
 
 	{
