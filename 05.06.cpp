@@ -23,14 +23,12 @@ struct Derive : Base, Base2
 
 	virtual void i() { cout << "Derive::i()" << endl; }
 	virtual void g() { cout << "Derive::g()" << endl; }
-	void myselffunc() {} // 只属于Derive的函数
+	void myselffunc() { cout << "Derive::myselffunc()" << endl; } // 只属于Derive的函数
 };
 
-class ParentClass // 一个父类
+struct ParentClass // 父类
 {
-public:
-	// virtual void f() {};
-	ParentClass() // 构造函数
+	ParentClass()
 	{
 		cout << "ParentClass::ParentClass()" << endl;
 	}
@@ -39,11 +37,10 @@ public:
 		cout << "ParentClass::~ParentClass()" << endl;
 	}
 };
-class SonClass : public ParentClass // 一个子类
+struct SonClass : ParentClass // 子类
 {
-public:
-	char *m_p = NULL;
-	SonClass() // 构造函数
+	char *m_p = nullptr;
+	SonClass()
 	{
 		cout << "SonClass::SonClass()" << endl;
 		m_p = new char[100]; // 这里分配了内存
@@ -57,31 +54,41 @@ public:
 
 int main()
 {
-	/*{
-		Base2* pb2 = new Derive();
-		delete pb2;
-	}*/
-	/*{
-		Derive* temp = new Derive();
-		Base2* pb2 = (Base2*)((char*)(temp)+sizeof(Base));
-	}
-*/
-	//{
-	//	Base* pbm = new Base();
-	//	Base2* pb222 = new Base2();
-
-	//	Derive* p11212 = new Derive();
-	//	p11212->g(); //Derive::g()
-	//	p11212->i(); //Derive::i()，走虚函数表，查询虚函数表得到虚函数地址并调用虚函数
-
-	//	Derive dddd;
-	//	dddd.i();   //Derive::i()，不走虚函数表，直接调用虚函数
-	//}
-
+	if (0)
 	{
-		// SonClass sonobj;
-		ParentClass *parobj = new SonClass; // 创建SonClass对象
-		delete parobj;						// 删除SonClass对象
+		Derive *temp = new Derive();
+		Base2 *pb2 = (Base2 *)((char *)(temp) + sizeof(Base));
+	}
+
+	if (0)
+	{
+		Base2 *pb2 = new Derive();
+		delete pb2;
+	}
+
+	if (0)
+	{
+		Base *pbm = new Base();
+		delete pbm;
+
+		Base2 *pb222 = new Base2();
+		delete pb222;
+
+		Derive *p11212 = new Derive();
+		p11212->g(); // Derive::g()
+		p11212->i(); // Derive::i()，走虚函数表，查询虚函数表得到虚函数地址并调用虚函数
+		delete p11212;
+
+		Derive dddd;
+		dddd.i(); // Derive::i()，不走虚函数表，直接调用虚函数
+	}
+
+	if (1)
+	{
+		SonClass sonobj;
+
+		ParentClass *parobj = new SonClass(); // 创建SonClass对象
+		delete parobj;						  // 删除SonClass对象
 	}
 
 	cout << "Over!\n";

@@ -3,26 +3,23 @@
 #include <cstdio>
 using namespace std;
 
-class Base
+struct Base
 {
-public:
 	virtual ~Base() {}
 	virtual void f() { cout << "Base::f()" << endl; }
 	virtual void g() { cout << "Base::g()" << endl; }
 	virtual void h() { cout << "Base::h()" << endl; }
 };
 
-class Derive : public Base
+struct Derive :  Base
 {
-public:
 	virtual void i() { cout << "Derive::i()" << endl; }
 	virtual void g() { cout << "Derive::g()" << endl; }
 	void myselffunc() { cout << "Derive::myselffunc()" << endl; } // 只属于Derive的函数
 };
 
-class BCXu
+struct BCXu
 {
-public:
 	virtual void pvfunc() = 0;
 };
 
@@ -45,7 +42,7 @@ int main()
 		delete pb;
 
 		Derive myderive;
-		Base &yb = myderive; // 基类引用引用的是 一个子类对象
+		Base &yb = myderive; // 基类引用引用的是一个子类对象
 		yb.g();
 	}
 	{
@@ -58,6 +55,7 @@ int main()
 	{
 		cout << sizeof(Base) << endl;
 		cout << sizeof(Derive) << endl;
+		cout << sizeof(BCXu) << endl;
 	}
 
 	cout << "Over!\n";
